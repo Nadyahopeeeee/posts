@@ -1,10 +1,10 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-// import { Link } from 'react-router-dom/cjs/react-router-dom.min'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-import PostAuthor from './PostAuthor'
 import TimeAgo from './TimeAgo'
+import PostAuthor from './PostAuthor'
+import ReactionButtons from './ReactionButtons'
 
 const PostList = () => {
   const posts = useSelector((state) => state.posts)
@@ -19,6 +19,7 @@ const PostList = () => {
       <PostAuthor userId={post.user} />
       <p className="post-content">{post.content.substring(0, 100)}</p>
       {post.date ? <TimeAgo timestamp={post.date} /> : ''}
+      <ReactionButtons post={post} />
       <Link to={`/posts/${post.id}`} className="button muted-button">
         View Post
       </Link>
