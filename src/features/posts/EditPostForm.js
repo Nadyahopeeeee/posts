@@ -13,16 +13,26 @@ const EditPostForm = ({ match }) => {
 
   const [title, setTitle] = useState(post.title)
   const [content, setContent] = useState(post.content)
+  const [userId, setUserId] = useState('')
 
   const dispatch = useDispatch()
   const history = useHistory()
+  const users = useSelector((state) => state.users)
 
   const onTitleChanged = (e) => setTitle(e.target.value)
   const onContentChanged = (e) => setContent(e.target.value)
+  const onAuthorChanged = (e) => setUserId(e.target.value)
 
+  const usersOptions = users.map((user) => (
+    <option key={user.id} value={user.id}>
+      {user.name}
+    </option>
+  ))
+
+  //fix changed author by new id
   const onSavePostClicked = () => {
-    if (title && content) {
-      dispatch(postUpdated({ id: postId, title, content }))
+    if (title && content && userId) {
+      dispatch(postUpdated({ id: postId, title, content, userId }))
       history.push(`/posts/${postId}`)
     }
   }
@@ -39,6 +49,11 @@ const EditPostForm = ({ match }) => {
           value={title}
           onChange={onTitleChanged}
         />
+        <label htmlFor="postAuthor">Author:</label>
+        <select id="postAuthor" value={userId} onChange={onAuthorChanged}>
+          <option value=""></option>
+          {usersOptions}
+        </select>
         <label htmlFor="postContent">Content:</label>
         <textarea
           id="postContent"

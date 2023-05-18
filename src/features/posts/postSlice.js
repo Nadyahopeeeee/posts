@@ -16,23 +16,25 @@ const postSlice = createSlice({
       reducer(state, action) {
         state.push(action.payload)
       },
-      prepare(title, content) {
+      prepare(title, content, userId) {
         return {
           payload: {
             id: nanoid(),
             title,
             content,
+            user: userId,
           },
         }
       },
     },
 
     postUpdated(state, action) {
-      const { id, title, content } = action.payload
+      const { id, title, content, userId } = action.payload
       const exitingPost = state.find((post) => post.id === id)
       if (exitingPost) {
         exitingPost.title = title
         exitingPost.content = content
+        exitingPost.user = userId
       }
     },
   },
