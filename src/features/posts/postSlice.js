@@ -20,6 +20,7 @@ const postSlice = createSlice({
         return {
           payload: {
             id: nanoid(),
+            date: new Date().toISOString(),
             title,
             content,
             user: userId,
