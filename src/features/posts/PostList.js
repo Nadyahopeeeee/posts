@@ -5,9 +5,10 @@ import { useSelector } from 'react-redux'
 import TimeAgo from './TimeAgo'
 import PostAuthor from './PostAuthor'
 import ReactionButtons from './ReactionButtons'
+import { selectAllPosts } from './postSlice'
 
 const PostList = () => {
-  const posts = useSelector((state) => state.posts)
+  const posts = useSelector(selectAllPosts)
 
   const orderedPosts = posts
     .slice()
