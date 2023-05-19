@@ -1,7 +1,6 @@
 import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit'
-import sub from 'date-fns/sub'
-
 import { client } from '../../api/client'
+// import sub from 'date-fns/sub'
 
 const initialState = {
   posts: [],
