@@ -27,5 +27,4 @@ async function start() {
     document.getElementById('root')
   )
 }
-
 start()

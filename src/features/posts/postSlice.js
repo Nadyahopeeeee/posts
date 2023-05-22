@@ -13,36 +13,42 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   return response.data
 })
 
+export const addNewPost = createAsyncThunk(
+  'posts/addNewPost',
+  async (initialPost) => {
+    const response = await client.post('/fakeApi/posts', initialPost)
+    return response.data
+  }
+)
+
 const postSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
+    // The existing `postAdded` reducer and prepare callback were deleted
+    // postAdded: {
+    //   reducer(state, action) {
+    //     state.posts.push(action.payload)
+    //   },
+    //   prepare(title, content, userId, reactions) {
+    //     return {
+    //       payload: {
+    //         id: nanoid(),
+    //         date: new Date().toISOString(),
+    //         title,
+    //         content,
+    //         user: userId,
+    //         reactions,
+    //       },
+    //     }
+    //   },
+    // },
     reactionAdded(state, action) {
       const { postId, reaction } = action.payload
       const existingPost = state.posts.find((post) => post.id === postId)
       if (existingPost) {
         existingPost.reactions[reaction]++
       }
-    },
-    // postAdded(state, action) {
-    //   state.push(action.payload)
-    // },
-    postAdded: {
-      reducer(state, action) {
-        state.posts.push(action.payload)
-      },
-      prepare(title, content, userId, reactions) {
-        return {
-          payload: {
-            id: nanoid(),
-            date: new Date().toISOString(),
-            title,
-            content,
-            user: userId,
-            reactions,
-          },
-        }
-      },
     },
     postUpdated(state, action) {
       const { id, title, content, userId } = action.payload
@@ -67,6 +73,9 @@ const postSlice = createSlice({
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
+      })
+      .addCase(addNewPost.fulfilled, (state, action) => {
+        state.posts.push(action.payload)
       })
   },
 })
