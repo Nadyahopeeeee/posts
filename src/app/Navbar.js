@@ -13,12 +13,10 @@ export const Navbar = () => {
     dispatch(fetchNotifications())
   }
 
-  //fix unreadNotificationsBadge
-  console.log(numUnreadNotifications)
 
   let unreadNotificationsBadge
   
-  if (numUnreadNotifications >= 0) {
+  if (numUnreadNotifications > 0) {
     unreadNotificationsBadge = (
       <span className="badge">{numUnreadNotifications}</span>
     )
